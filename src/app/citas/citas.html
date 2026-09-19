@@ -1,0 +1,35 @@
+<h2 class="text-center mb-4 text-dark mt-5">Registro de Citas</h2>
+      <form (ngSubmit)="registrarCita()" #formCita="ngForm">
+        <div class="mb-3">
+          <label for="fecha" class="form-label text-dark">Fecha:</label>
+          <input type="date" id="fecha" name="fecha" [(ngModel)]="cita.fecha" class="form-control text-dark" required>
+        </div>
+        <div class="mb-3">
+          <label for="horaInicio" class="form-label text-dark">Hora Inicio:</label>
+          <input type="time" id="horaInicio" name="horaInicio" [(ngModel)]="cita.horaInicio"
+            class="form-control text-dark" required>
+        </div>
+        <div class="mb-3">
+          <label for="horaFin" class="form-label text-dark">Hora Fin:</label>
+          <input type="time" id="horaFin" name="horaFin" [(ngModel)]="cita.horaFin" class="form-control text-dark"
+            required>
+        </div>
+        <div class="mb-3">
+          <label for="pacienteSelect" class="form-label text-dark">Paciente:</label>
+          <select id="pacienteSelect" name="paciente" [(ngModel)]="cita.paciente" class="form-select text-dark"
+            required>
+            <option value="" disabled selected>Seleccione un paciente</option>
+            <option *ngFor="let p of listarPacientes()" [ngValue]="p">{{ p.nombres }} {{ p.apellidos }}</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="medicoSelect" class="form-label text-dark">Seleccione su médico:</label>
+          <select id="medicoSelect" name="medico" [(ngModel)]="cita.medico" class="form-select text-dark" required>
+            <option value="" disabled selected>Seleccione un médico</option>
+            <option *ngFor="let m of listarMedicos()" [ngValue]="m">{{ m.nombre }} - {{ m.especialidad }}</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Registrar Cita</button>
+      </form>
+
+      <div *ngIf="mensajeCita" class="alert alert-info mt-3">{{ mensajeCita }}</div>

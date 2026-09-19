@@ -1,0 +1,33 @@
+<div class="list-group">
+  <button class="list-group-item list-group-item-action text-dark"
+          (click)="seleccionarEspecialidad('terapia')">
+    Terapia Neural
+  </button>
+  <button class="list-group-item list-group-item-action text-dark"
+          (click)="seleccionarEspecialidad('quiropractica')">
+    Quiropraxia
+  </button>
+  <button class="list-group-item list-group-item-action text-dark"
+          (click)="seleccionarEspecialidad('fisioterapia')">
+    Fisioterapia
+  </button>
+  <button class="list-group-item list-group-item-action text-dark"
+          (click)="seleccionarEspecialidad('nutricion')">
+    Nutrición y Dietética Terapéutica
+  </button>
+</div>
+
+<div class="mt-3 text-dark">
+  <div *ngIf="especialidadSeleccionada === 'terapia'">
+    <p>La Terapia Neural regula el sistema nervioso mediante anestésicos locales.</p>
+  </div>
+  <div *ngIf="especialidadSeleccionada === 'quiropractica'">
+    <p>La Quiropraxia se centra en el diagnóstico y tratamiento de problemas musculoesqueléticos.</p>
+  </div>
+  <div *ngIf="especialidadSeleccionada === 'fisioterapia'">
+    <p>La Fisioterapia ayuda a recuperar movilidad y fuerza tras lesiones o cirugías.</p>
+  </div>
+  <div *ngIf="especialidadSeleccionada === 'nutricion'">
+    <p>La Nutrición y Dietética Terapéutica promueve hábitos alimenticios saludables para mejorar la calidad de vida.</p>
+  </div>
+</div>
