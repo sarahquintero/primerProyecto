@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Medico } from '../modelos/medico.model';
 import { MedicoService } from '../servicios/medico';
 
+
 @Component({
   selector: 'app-medicos',
   standalone: true,
@@ -28,16 +29,6 @@ export class MedicosComponent {
 
   registrarMedico() {
     this.mensajeMedico = this.medicoService.registrarMedico(this.medico);
-    // Reiniciar formulario
-    this.medico = {
-      id: 0,
-      nombre: '',
-      apellido: '',
-      especialidad: '',
-      horarioAtencion: '',
-      aniosExperiencia: 0,
-      bibliografia: ''
-    };
   }
 
   listarMedicos(): Medico[] {

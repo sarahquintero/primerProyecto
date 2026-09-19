@@ -1,35 +1,101 @@
 <h2 class="text-center mb-4 text-dark mt-5">Registro de Citas</h2>
-      <form (ngSubmit)="registrarCita()" #formCita="ngForm">
-        <div class="mb-3">
-          <label for="fecha" class="form-label text-dark">Fecha:</label>
-          <input type="date" id="fecha" name="fecha" [(ngModel)]="cita.fecha" class="form-control text-dark" required>
-        </div>
-        <div class="mb-3">
-          <label for="horaInicio" class="form-label text-dark">Hora Inicio:</label>
-          <input type="time" id="horaInicio" name="horaInicio" [(ngModel)]="cita.horaInicio"
-            class="form-control text-dark" required>
-        </div>
-        <div class="mb-3">
-          <label for="horaFin" class="form-label text-dark">Hora Fin:</label>
-          <input type="time" id="horaFin" name="horaFin" [(ngModel)]="cita.horaFin" class="form-control text-dark"
-            required>
-        </div>
-        <div class="mb-3">
-          <label for="pacienteSelect" class="form-label text-dark">Paciente:</label>
-          <select id="pacienteSelect" name="paciente" [(ngModel)]="cita.paciente" class="form-select text-dark"
-            required>
-            <option value="" disabled selected>Seleccione un paciente</option>
-            <option *ngFor="let p of listarPacientes()" [ngValue]="p">{{ p.nombres }} {{ p.apellidos }}</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="medicoSelect" class="form-label text-dark">Seleccione su médico:</label>
-          <select id="medicoSelect" name="medico" [(ngModel)]="cita.medico" class="form-select text-dark" required>
-            <option value="" disabled selected>Seleccione un médico</option>
-            <option *ngFor="let m of listarMedicos()" [ngValue]="m">{{ m.nombre }} - {{ m.especialidad }}</option>
-          </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Registrar Cita</button>
-      </form>
 
-      <div *ngIf="mensajeCita" class="alert alert-info mt-3">{{ mensajeCita }}</div>
+<form (ngSubmit)="registrarCita()" #formCita="ngForm">
+  <!-- Fecha -->
+  <div class="mb-3">
+    <label for="fecha" class="form-label text-dark">Fecha:</label>
+    <input type="date" id="fecha" name="fecha" [(ngModel)]="cita.fecha" class="form-control text-dark" required
+      #fecha="ngModel">
+    <div *ngIf="fecha.invalid && fecha.touched" class="text-danger">
+      <small>La fecha es obligatoria</small>
+    </div>
+  </div>
+
+  <!-- Hora inicio -->
+  <div class="mb-3">
+    <label for="horaInicio" class="form-label text-dark">Hora Inicio:</label>
+    <input type="time" id="horaInicio" name="horaInicio" [(ngModel)]="cita.horaInicio" class="form-control text-dark"
+      required #horaInicio="ngModel">
+    <div *ngIf="horaInicio.invalid && horaInicio.touched" class="text-danger">
+      <small>La hora de inicio es obligatoria</small>
+    </div>
+  </div>
+
+  <!-- Hora fin -->
+  <div class="mb-3">
+    <label for="horaFin" class="form-label text-dark">Hora Fin:</label>
+    <input type="time" id="horaFin" name="horaFin" [(ngModel)]="cita.horaFin" class="form-control text-dark" required
+      #horaFin="ngModel">
+    <div *ngIf="horaFin.invalid && horaFin.touched" class="text-danger">
+      <small>La hora de fin es obligatoria</small>
+    </div>
+  </div>
+
+  <!-- Paciente -->
+  <div class="mb-3">
+    <label for="pacienteSelect" class="form-label text-dark">Paciente:</label>
+    <select id="pacienteSelect" name="paciente" [(ngModel)]="cita.paciente" class="form-select text-dark" required
+      #paciente="ngModel">
+      <option value="" disabled selected>Seleccione un paciente</option>
+      <option *ngFor="let p of listarPacientes()" [ngValue]="p">
+        {{ p.nombres }} {{ p.apellidos }}
+      </option>
+    </select>
+    <div *ngIf="paciente.invalid && paciente.touched" class="text-danger">
+      <small>Debe seleccionar un paciente</small>
+    </div>
+  </div>
+
+  <!-- Médico -->
+  <div class="mb-3">
+    <label for="medicoSelect" class="form-label text-dark">Seleccione su médico:</label>
+    <select id="medicoSelect" name="medico" [(ngModel)]="cita.medico" class="form-select text-dark" required
+      #medico="ngModel">
+      <option value="" disabled selected>Seleccione un médico</option>
+      <option *ngFor="let m of listarMedicos()" [ngValue]="m">
+        {{ m.nombre }} - {{ m.especialidad }}
+      </option>
+    </select>
+    <div *ngIf="medico.invalid && medico.touched" class="text-danger">
+      <small>Debe seleccionar un médico</small>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="formCita.invalid">
+    Registrar Cita
+  </button>
+</form>
+
+<div *ngIf="mensajeCita" class="alert alert-info mt-3">{{ mensajeCita }}</div>
+
+<!-- Tabla de citas registradas -->
+<h3 class="mt-4 text-dark">Citas Registradas</h3>
+<table class="table table-striped table-bordered mt-2">
+  <thead class="table-primary">
+    <tr>
+      <th>Fecha</th>
+      <th>Hora Inicio</th>
+      <th>Hora Fin</th>
+      <th>Paciente</th>
+      <th>Médico</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let c of listarCitas(); let i = index">
+      <td>{{ c.fecha }}</td>
+      <td>{{ c.horaInicio }}</td>
+      <td>{{ c.horaFin }}</td>
+      <td>{{ c.paciente?.nombres }} {{ c.paciente?.apellidos }}</td>
+      <td>{{ c.medico?.nombre }} {{ c.medico?.apellido }} - {{ c.medico?.especialidad }}</td>
+      <td>
+        <button class="btn btn-danger btn-sm" (click)="eliminarCita(i)">Eliminar</button>
+      </td>
+    </tr>
+    <tr *ngIf="listarCitas().length === 0">
+      <td colspan="6" class="text-center text-muted">No hay citas registradas</td>
+    </tr>
+  </tbody>
+
+</table>

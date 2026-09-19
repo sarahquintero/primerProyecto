@@ -1,41 +1,69 @@
 <h2 class="text-center mb-4 text-dark">Registro de Médicos</h2>
 
 <form (ngSubmit)="registrarMedico()" #formMedico="ngForm" class="mb-5">
+  <!-- Nombres -->
   <div class="mb-3">
     <label for="nombresMedico" class="form-label text-dark">Nombres:</label>
     <input type="text" id="nombresMedico" name="nombresMedico"
            [(ngModel)]="medico.nombre" class="form-control text-dark"
-           placeholder="Nombres" required>
+           placeholder="Nombres" required minlength="3" maxlength="20" #nombre="ngModel">
+    <div *ngIf="nombre.invalid && nombre.touched" class="text-danger">
+      <small *ngIf="nombre.errors?.['required']">El nombre es obligatorio</small>
+      <small *ngIf="nombre.errors?.['minlength']">Debe tener al menos 3 caracteres</small>
+      <small *ngIf="nombre.errors?.['maxlength']">No puede superar 20 caracteres</small>
+    </div>
   </div>
 
+  <!-- Apellidos -->
   <div class="mb-3">
     <label for="apellidosMedico" class="form-label text-dark">Apellidos:</label>
     <input type="text" id="apellidosMedico" name="apellidosMedico"
            [(ngModel)]="medico.apellido" class="form-control text-dark"
-           placeholder="Apellidos" required>
+           placeholder="Apellidos" required minlength="3" maxlength="20" #apellido="ngModel">
+    <div *ngIf="apellido.invalid && apellido.touched" class="text-danger">
+      <small *ngIf="apellido.errors?.['required']">El apellido es obligatorio</small>
+      <small *ngIf="apellido.errors?.['minlength']">Debe tener al menos 3 caracteres</small>
+      <small *ngIf="apellido.errors?.['maxlength']">No puede superar 20 caracteres</small>
+    </div>
   </div>
 
+  <!-- Especialidad -->
   <div class="mb-3">
     <label for="especialidadMedico" class="form-label text-dark">Especialidad:</label>
     <input type="text" id="especialidadMedico" name="especialidadMedico"
            [(ngModel)]="medico.especialidad" class="form-control text-dark"
-           placeholder="Especialidad" required>
+           placeholder="Especialidad" required minlength="3" maxlength="30" #especialidad="ngModel">
+    <div *ngIf="especialidad.invalid && especialidad.touched" class="text-danger">
+      <small *ngIf="especialidad.errors?.['required']">La especialidad es obligatoria</small>
+      <small *ngIf="especialidad.errors?.['minlength']">Debe tener al menos 3 caracteres</small>
+      <small *ngIf="especialidad.errors?.['maxlength']">No puede superar 30 caracteres</small>
+    </div>
   </div>
 
+  <!-- Horario -->
   <div class="mb-3">
     <label for="horarioMedico" class="form-label text-dark">Horario de atención:</label>
     <input type="text" id="horarioMedico" name="horarioMedico"
            [(ngModel)]="medico.horarioAtencion" class="form-control text-dark"
-           placeholder="Ej: Lunes a Viernes 8am-4pm" required>
+           placeholder="Ej: Lunes a Viernes 8am-4pm" required #horario="ngModel">
+    <div *ngIf="horario.invalid && horario.touched" class="text-danger">
+      <small>El horario de atención es obligatorio</small>
+    </div>
   </div>
 
+  <!-- Experiencia -->
   <div class="mb-3">
     <label for="experienciaMedico" class="form-label text-dark">Años de experiencia:</label>
     <input type="number" id="experienciaMedico" name="experienciaMedico"
            [(ngModel)]="medico.aniosExperiencia" class="form-control text-dark"
-           min="0" placeholder="Años de experiencia" required>
+           min="1" placeholder="Años de experiencia" required #experiencia="ngModel">
+    <div *ngIf="experiencia.invalid && experiencia.touched" class="text-danger">
+      <small *ngIf="experiencia.errors?.['required']">La experiencia es obligatoria</small>
+      <small *ngIf="experiencia.errors?.['min']">Debe ser mayor a 0</small>
+    </div>
   </div>
 
+  <!-- Bibliografía -->
   <div class="mb-3">
     <label for="bibliografiaMedico" class="form-label text-dark">Bibliografía:</label>
     <textarea id="bibliografiaMedico" name="bibliografiaMedico"
@@ -43,7 +71,9 @@
               placeholder="Breve descripción del médico"></textarea>
   </div>
 
-  <button type="submit" class="btn btn-primary">Registrar Médico</button>
+  <button type="submit" class="btn btn-primary" [disabled]="formMedico.invalid">
+    Registrar Médico
+  </button>
 </form>
 
 <div *ngIf="mensajeMedico" class="alert alert-info mt-3">{{ mensajeMedico }}</div>

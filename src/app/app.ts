@@ -2,12 +2,11 @@ import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header';
 import { FooterComponent } from './footer/footer';
-import { ClientesComponent } from './clientes/clientes';
 import { FormsModule } from '@angular/forms';
 import { PacientesComponent } from './pacientes/pacientes';
 import { MedicosComponent } from './medicos/medicos';
 import { CitasComponent } from './citas/citas';
-import { EspecialidadesComponent } from './especialidades/especialidades'; // ðŸ‘ˆ importa tu componente
+import { EspecialidadesComponent } from './especialidades/especialidades';
 
 
 @Component({
@@ -16,7 +15,6 @@ import { EspecialidadesComponent } from './especialidades/especialidades'; // ðŸ
     RouterOutlet,
     HeaderComponent,
     FooterComponent,
-    ClientesComponent,
     CitasComponent,
     PacientesComponent,
     MedicosComponent,

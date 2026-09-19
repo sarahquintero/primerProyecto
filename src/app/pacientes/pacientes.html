@@ -1,73 +1,108 @@
 <h2 class="text-center mb-4 text-dark">Registro de Pacientes</h2>
-      <p class="lead text-center text-dark">
-        Complete el siguiente formulario para registrarse en la clínica y poder agendar sus citas.
-      </p>
-      <!-- Formulario Pacientes -->
-      <form (ngSubmit)="registrarPaciente()" #formPaciente="ngForm">
-        <!-- Tipo de Identificación -->
-        <div class="mb-3">
-          <label for="tipoIdentificacion" class="form-label text-dark">Tipo de Identificación:</label>
-          <select id="tipoIdentificacion" name="tipoIdentificacion" [(ngModel)]="paciente.tipoIdentificacion"
-            class="form-select text-dark" required>
-            <option value="" disabled selected>Seleccione un tipo de identificación</option>
-            <option value="cc">Cédula de Ciudadanía</option>
-            <option value="ti">Tarjeta de Identidad</option>
-            <option value="ce">Cédula de Extranjería</option>
-            <option value="pas">Pasaporte</option>
-          </select>
-        </div>
+<p class="lead text-center text-dark">
+  Complete el siguiente formulario para registrarse en la clínica y poder agendar sus citas.
+</p>
 
-        <div class="mb-3">
-          <label for="nombresPaciente" class="form-label text-dark">Nombres:</label>
-          <input type="text" id="nombresPaciente" name="nombresPaciente" [(ngModel)]="paciente.nombres"
-            class="form-control text-dark" required>
-        </div>
+<form (ngSubmit)="registrarPaciente()" #formPaciente="ngForm">
+  <!-- Tipo de Identificación -->
+  <div class="mb-3">
+    <label for="tipoIdentificacion" class="form-label text-dark">Tipo de Identificación:</label>
+    <select id="tipoIdentificacion" name="tipoIdentificacion" [(ngModel)]="paciente.tipoIdentificacion"
+      class="form-select text-dark" required #tipoIdentificacion="ngModel">
+      <option value="" disabled selected>Seleccione un tipo de identificación</option>
+      <option value="cc">Cédula de Ciudadanía</option>
+      <option value="ti">Tarjeta de Identidad</option>
+      <option value="ce">Cédula de Extranjería</option>
+      <option value="pas">Pasaporte</option>
+    </select>
+    <div *ngIf="tipoIdentificacion.invalid && tipoIdentificacion.touched" class="text-danger">
+      <small>El tipo de identificación es obligatorio</small>
+    </div>
+  </div>
 
-        <div class="mb-3">
-          <label for="apellidosPaciente" class="form-label text-dark">Apellidos:</label>
-          <input type="text" id="apellidosPaciente" name="apellidosPaciente" [(ngModel)]="paciente.apellidos"
-            class="form-control text-dark" required>
-        </div>
+  <!-- Nombres -->
+  <div class="mb-3">
+    <label for="nombresPaciente" class="form-label text-dark">Nombres:</label>
+    <input type="text" id="nombresPaciente" name="nombresPaciente" [(ngModel)]="paciente.nombres"
+      class="form-control text-dark" required minlength="3" maxlength="20" #nombres="ngModel">
+    <div *ngIf="nombres.invalid && nombres.touched" class="text-danger">
+      <small *ngIf="nombres.errors?.['required']">El nombre es obligatorio</small>
+      <small *ngIf="nombres.errors?.['minlength']">Debe tener al menos 3 caracteres</small>
+      <small *ngIf="nombres.errors?.['maxlength']">No puede superar 20 caracteres</small>
+    </div>
+  </div>
 
-        <div class="mb-3">
-          <label for="numeroIdentificacion" class="form-label text-dark">Número de Identificación:</label>
-          <input type="text" id="numeroIdentificacion" name="numeroIdentificacion" [(ngModel)]="paciente.tipoIdentificacion"
-            class="form-control text-dark" required>
-        </div>
+  <!-- Apellidos -->
+  <div class="mb-3">
+    <label for="apellidosPaciente" class="form-label text-dark">Apellidos:</label>
+    <input type="text" id="apellidosPaciente" name="apellidosPaciente" [(ngModel)]="paciente.apellidos"
+      class="form-control text-dark" required minlength="3" maxlength="20" #apellidos="ngModel">
+    <div *ngIf="apellidos.invalid && apellidos.touched" class="text-danger">
+      <small *ngIf="apellidos.errors?.['required']">El apellido es obligatorio</small>
+      <small *ngIf="apellidos.errors?.['minlength']">Debe tener al menos 3 caracteres</small>
+      <small *ngIf="apellidos.errors?.['maxlength']">No puede superar 20 caracteres</small>
+    </div>
+  </div>
 
-        <div class="mb-3">
-          <label for="correoElectronico" class="form-label text-dark">Correo Electrónico:</label>
-          <input type="email" id="correoElectronico" name="correoElectronico" [(ngModel)]="paciente.correo"
-            class="form-control text-dark" required>
-        </div>
+  <!-- Número de Identificación -->
+  <div class="mb-3">
+    <label for="identificacion" class="form-label text-dark">Número de Identificación:</label>
+    <input type="text" id="identificacion" name="identificacion" [(ngModel)]="paciente.identificacion"
+      class="form-control text-dark" required minlength="6" maxlength="15" #identificacion="ngModel">
+    <div *ngIf="identificacion.invalid && identificacion.touched" class="text-danger">
+      <small *ngIf="identificacion.errors?.['required']">La identificación es obligatoria</small>
+      <small *ngIf="identificacion.errors?.['minlength']">Debe tener al menos 6 caracteres</small>
+      <small *ngIf="identificacion.errors?.['maxlength']">No puede superar 15 caracteres</small>
+    </div>
+  </div>
 
-        <!-- Género -->
-        <fieldset class="mb-3">
-          <legend class="form-label text-dark">Género:</legend>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="femenino" name="genero" [(ngModel)]="paciente.genero"
-              value="femenino">
-            <label class="form-check-label text-dark" for="femenino">Femenino</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="masculino" name="genero" [(ngModel)]="paciente.genero"
-              value="masculino">
-            <label class="form-check-label text-dark" for="masculino">Masculino</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="otro" name="genero" [(ngModel)]="paciente.genero"
-              value="otro">
-            <label class="form-check-label text-dark" for="otro">Otro</label>
-          </div>
-        </fieldset>
+  <!-- Correo electrónico -->
+  <div class="mb-3">
+    <label for="correoElectronico" class="form-label text-dark">Correo Electrónico:</label>
+    <input type="email" id="correoElectronico" name="correoElectronico" [(ngModel)]="paciente.correo"
+      class="form-control text-dark" required email #correo="ngModel">
+    <div *ngIf="correo.invalid && correo.touched" class="text-danger">
+      <small *ngIf="correo.errors?.['required']">El correo es obligatorio</small>
+      <small *ngIf="correo.errors?.['email']">Debe ser un correo válido</small>
+    </div>
+  </div>
 
-        <div class="mb-3">
-          <label for="fechaNacimiento" class="form-label text-dark">Fecha de Nacimiento:</label>
-          <input type="date" id="fechaNacimiento" name="fechaNacimiento" [(ngModel)]="paciente.fechaNacimiento"
-            class="form-control text-dark" required>
-        </div>
+  <!-- Género -->
+  <fieldset class="mb-3">
+    <legend class="form-label text-dark">Género:</legend>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" id="femenino" name="genero" [(ngModel)]="paciente.genero"
+        value="femenino" required #genero="ngModel">
+      <label class="form-check-label text-dark" for="femenino">Femenino</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" id="masculino" name="genero" [(ngModel)]="paciente.genero"
+        value="masculino">
+      <label class="form-check-label text-dark" for="masculino">Masculino</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" id="otro" name="genero" [(ngModel)]="paciente.genero" value="otro">
+      <label class="form-check-label text-dark" for="otro">Otro</label>
+    </div>
+    <div *ngIf="genero.invalid && genero.touched" class="text-danger">
+      <small>El género es obligatorio</small>
+    </div>
+  </fieldset>
 
-        <button type="submit" class="btn btn-primary">Registrar Paciente</button>
-      </form>
+  <!-- Fecha de nacimiento -->
+  <div class="mb-3">
+    <label for="fechaNacimiento" class="form-label text-dark">Fecha de Nacimiento:</label>
+    <input type="date" id="fechaNacimiento" name="fechaNacimiento" [(ngModel)]="paciente.fechaNacimiento"
+      class="form-control text-dark" required #fechaNacimiento="ngModel">
+    <div *ngIf="fechaNacimiento.invalid && (fechaNacimiento.touched || formPaciente.submitted)" class="text-danger">
+      <small>La fecha de nacimiento es obligatoria</small>
+    </div>
+  </div>
 
-      <div *ngIf="mensaje" class="alert alert-info mt-3">{{ mensaje }}</div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="formPaciente.invalid">
+    Registrar Paciente
+  </button>
+</form>
+
+<div *ngIf="mensaje" class="alert alert-info mt-3">{{ mensaje }}</div>

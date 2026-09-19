@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Medico } from '../modelos/medico.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
+
 export class MedicoService {
   private medicos: Medico[] = [];
 

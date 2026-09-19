@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./pacientes.css']
 })
 export class PacientesComponent {
-  paciente: Paciente = { id: 0, nombres: '', apellidos: '', tipoIdentificacion: '', identificacion: '',fechaNacimiento: new Date() , correo: '', genero: ''};
+  paciente: Paciente = { id: 0, nombres: '', apellidos: '', tipoIdentificacion: '', identificacion: '', fechaNacimiento: '', correo: '', genero: ''};
   mensaje: string = '';
 
   constructor(private pacienteService: PacienteService) {}

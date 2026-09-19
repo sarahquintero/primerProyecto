@@ -1,10 +1,10 @@
-export interface Paciente {
-  id: number;
-  nombres: string;
-  apellidos: string;
-  tipoIdentificacion: string;
-  identificacion: string;
-  fechaNacimiento: Date;
-  correo: string;
-  genero: string;
+export class Paciente {
+  id: number = 0;
+  nombres: string = '';
+  apellidos: string = '';
+  tipoIdentificacion: string = '';
+  identificacion: string = '';
+  fechaNacimiento: string = '';
+  correo: string = '';
+  genero: string = '';
 }
